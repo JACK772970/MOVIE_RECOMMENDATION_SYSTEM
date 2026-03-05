@@ -1,7 +1,8 @@
 streamlit
 scikit-learn==1.4.2
-nltk
-
+scipy==1.13.0
 pandas
+numpy
+
 
 
