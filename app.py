@@ -2,26 +2,17 @@ import streamlit as st
 import pickle
 import pandas as pd
 import numpy as np
-
+from sklearn.metrics.pairwise import cosine_similarity
 
 # Load saved files
-movies = pickle.load(open('movies.pkl', 'rb'))
-vectors =np.load('vectors.npy')
 
-# Custom cosine similarity
-def cosine_similarity_custom(vectors):
-    similarity = []
-    for i in range(len(vectors)):
-        row = []
-        for j in range(len(vectors)):
-            dot = np.dot(vectors[i], vectors[j])
-            norm_i = np.linalg.norm(vectors[i])
-            norm_j = np.linalg.norm(vectors[j])
-            row.append(dot / (norm_i * norm_j))
-        similarity.append(row)
-    return np.array(similarity)
+movies = pickle.load(open('movies.pkl', 'rb'))
+cv = pickle.load(open('cv.pkl', 'rb'))
+vectors = cv.transform(movies['tags']).toarray()
+similarity = cosine_similarity(vectors)
+
     
-similarity = cosine_similarity_custom(vectors)
+
 
 
 # Recommend function
@@ -55,5 +46,6 @@ if st.button("Recommend"):
     for movie in recommendations:
 
         st.write("🎥", movie)
+
 
 
