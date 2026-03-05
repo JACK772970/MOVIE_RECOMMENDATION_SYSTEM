@@ -6,8 +6,7 @@ import numpy as np
 
 # Load saved files
 movies = pickle.load(open('movies.pkl', 'rb'))
-cv = pickle.load(open('cv.pkl', 'rb'))
-vectors = cv.transform(movies['tags']).toarray()
+vectors =np.load('vectors.npy')
 
 # Custom cosine similarity
 def cosine_similarity_custom(vectors):
@@ -56,4 +55,5 @@ if st.button("Recommend"):
     for movie in recommendations:
 
         st.write("🎥", movie)
+
 
