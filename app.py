@@ -2,14 +2,14 @@ import streamlit as st
 import pickle
 import pandas as pd
 import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
+from scipy.spatial.distance import cdist
 
 # Load saved files
 
 movies = pickle.load(open('movies.pkl', 'rb'))
 cv = pickle.load(open('cv.pkl', 'rb'))
 vectors = cv.transform(movies['tags']).toarray()
-similarity = cosine_similarity(vectors)
+similarity = 1 - cdist(vectors, vectors, metric='cosine')
 
     
 
@@ -46,6 +46,7 @@ if st.button("Recommend"):
     for movie in recommendations:
 
         st.write("🎥", movie)
+
 
 
 
